@@ -2,11 +2,37 @@ service: pizzaria-app
 
 frameworkVersion: '3'
 
+package:
+  individually: false
+
 provider:
   name: aws
   runtime: python3.9
   stage: ${opt:stage, 'dev'}
   region: us-east-1
+  
+  # ESTA É A SEÇÃO DE PERMISSÕES. AGORA ESTÁ 100% CORRETA.
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:UpdateItem"
+            - "dynamodb:GetItem"
+          Resource: !GetAtt OrdersTable.Arn
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:Scan"
+          Resource: !GetAtt TokensTable.Arn
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:DescribeStream"
+            - "dynamodb:GetRecords"
+            - "dynamodb:GetShardIterator"
+            - "dynamodb:ListStreams"
+          Resource: !GetAtt OrdersTable.StreamArn
 
 custom:
   orders_table_name: orders-table-${self:provider.stage}
@@ -21,6 +47,7 @@ functions:
           method: post
     environment:
       ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
 
   setAsReceived:
     handler: src.set_as_received.handler.handle
@@ -30,6 +57,7 @@ functions:
           method: patch
     environment:
       ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name} # Adicionado para consistência
 
   setAsDelivered:
     handler: src.set_as_delivered.handler.handle
@@ -39,6 +67,7 @@ functions:
           method: patch
     environment:
       ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name} # Adicionado para consistência
 
   addToken:
     handler: src.add_token.handler.handle
@@ -59,19 +88,6 @@ functions:
             - eventName: [INSERT]
     environment:
       TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
-
-iam:
-  role:
-    statements:
-      - Effect: "Allow"
-        Action: ["dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:GetItem"]
-        Resource: !GetAtt OrdersTable.Arn
-      - Effect: "Allow"
-        Action: ["dynamodb:PutItem", "dynamodb:Scan"]
-        Resource: !GetAtt TokensTable.Arn
-      - Effect: "Allow"
-        Action: ["dynamodb:DescribeStream", "dynamodb:GetRecords", "dynamodb:GetShardIterator", "dynamodb:ListStreams"]
-        Resource: !GetAtt OrdersTable.StreamArn
 
 resources:
   Resources:
