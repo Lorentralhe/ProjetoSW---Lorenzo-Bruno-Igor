@@ -1,0 +1,8 @@
+{
+  "name": "pizzaria-app-pro",
+  "version": "1.0.0",
+  "description": "API Serverless para uma pizzaria",
+  "devDependencies": {
+    "serverless-python-requirements": "^5.4.0"
+  }
+}

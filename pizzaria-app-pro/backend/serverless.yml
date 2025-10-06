@@ -1,0 +1,105 @@
+service: pizzaria-app
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  
+  iam: # <-- CORRIGIDO E NO LUGAR CERTO
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: ["dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:GetItem"]
+          Resource: !GetAtt OrdersTable.Arn
+        - Effect: "Allow"
+          Action: ["dynamodb:PutItem", "dynamodb:Scan"]
+          Resource: !GetAtt TokensTable.Arn
+        - Effect: "Allow"
+          Action: ["dynamodb:DescribeStream", "dynamodb:GetRecords", "dynamodb:GetShardIterator", "dynamodb:ListStreams"]
+          Resource: !GetAtt OrdersTable.StreamArn
+
+custom:
+  orders_table_name: orders-table-${self:provider.stage}
+  tokens_table_name: tokens-table-${self:provider.stage}
+
+functions:
+  addOrder:
+    handler: src.add_order.handler.handle
+    events:
+      - httpApi:
+          path: /orders
+          method: post
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+
+  setAsReceived:
+    handler: src.set_as_received.handler.handle
+    events:
+      - httpApi:
+          path: /orders/{orderId}/received
+          method: patch
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+
+  setAsDelivered:
+    handler: src.set_as_delivered.handler.handle
+    events:
+      - httpApi:
+          path: /orders/{orderId}/delivered
+          method: patch
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+
+  addToken:
+    handler: src.add_token.handler.handle
+    events:
+      - httpApi:
+          path: /tokens
+          method: post
+    environment:
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+  notifyOwner:
+    handler: src.notify_owner.handler.handle
+    events:
+      - stream:
+          type: dynamodb
+          arn: !GetAtt OrdersTable.StreamArn
+          filterPatterns:
+            - eventName: [INSERT]
+    environment:
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+resources:
+  Resources:
+    OrdersTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:custom.orders_table_name}
+        AttributeDefinitions:
+          - AttributeName: "orderId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "orderId"
+            KeyType: "HASH"
+        BillingMode: "PAY_PER_REQUEST"
+        StreamSpecification:
+          StreamViewType: "NEW_IMAGE"
+
+    TokensTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:custom.tokens_table_name}
+        AttributeDefinitions:
+          - AttributeName: "tokenId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "tokenId"
+            KeyType: "HASH"
+        BillingMode: "PAY_PER_REQUEST"
+
+plugins:
+  - serverless-python-requirements
