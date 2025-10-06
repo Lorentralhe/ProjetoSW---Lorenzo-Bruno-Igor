@@ -1,0 +1,52 @@
+functions:
+  addOrder:
+    handler: src.add_order.handler.handle
+    events:
+      - httpApi:
+          path: /orders
+          method: post
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+  setAsReceived:
+    handler: src.set_as_received.handler.handle
+    events:
+      - httpApi:
+          path: /orders/{orderId}/received
+          method: patch
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+  setAsDelivered:
+    handler: src.set_as_delivered.handler.handle
+    events:
+      - httpApi:
+          path: /orders/{orderId}/delivered
+          method: patch
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name}
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+  addToken:
+    handler: src.add_token.handler.handle
+    events:
+      - httpApi:
+          path: /tokens
+          method: post
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name} # Adicionado
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
+
+  notifyOwner:
+    handler: src.notify_owner.handler.handle
+    events:
+      - stream:
+          type: dynamodb
+          arn: !GetAtt OrdersTable.StreamArn
+          filterPatterns:
+            - eventName: [INSERT]
+    environment:
+      ORDERS_TABLE_NAME: ${self:custom.orders_table_name} # Adicionado
+      TOKENS_TABLE_NAME: ${self:custom.tokens_table_name}
