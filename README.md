@@ -67,7 +67,10 @@ $ npm install
 # Rode a aplicação Frontend
 $ npm run dev
 
-👥 Autores  
+```
+  
+
+### 👥 Autores  
 Este projeto foi desenvolvido por:
 
 <table>
