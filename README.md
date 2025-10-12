@@ -16,7 +16,7 @@
 
 ### 📝 Descrição do Projeto
 <p align="justify">
-  Aqui você descreve com mais detalhes o que o projeto faz. Qual o objetivo? Qual problema ele resolve? Fale sobre o sistema de pedidos, o gerenciamento de clientes, o cardápio, etc.
+  O Pizzaria App Pro é um sistema desenvolvido para registrar pedidos de pizza feitos pelos clientes, atualizar o status do pedido conforme o que está acontecendo e notificar o dono do estabelecimento quando o pedido for entregue.
 </p>
 
 ---
