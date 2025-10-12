@@ -77,7 +77,7 @@ Este projeto foi desenvolvido por:
 <tr>
 <td align="center">
 <a href="https://github.com/Lorentralhe">
-<sub><b>Lorenzo Tralhe</b></sub>
+<sub><b>Lorenzo</b></sub>
 </a>
 </td>
 <td align="center">
