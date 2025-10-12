@@ -68,6 +68,30 @@ $ npm install
 $ npm run dev
 
 ```
+🛠️ Tecnologias Utilizadas
+As seguintes ferramentas foram usadas na construção do projeto:
+
+Backend (Serverless)
+<p>
+<a href="https://nodejs.org/en/" target="_blank">
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"/>
+</a>
+<a href="https://aws.amazon.com/lambda/" target="_blank">
+<img src="https://img.shields.io/badge/AWS_Lambda-FF9900?style=for-the-badge&logo=aws-lambda&logoColor=white" alt="AWS Lambda"/>
+</a>
+<a href="https://aws.amazon.com/api-gateway/" target="_blank">
+<img src="https://img.shields.io/badge/API_Gateway-FF4F8B?style=for-the-badge&logo=amazon-api-gateway&logoColor=white" alt="Amazon API Gateway"/>
+</a>
+<a href="https://aws.amazon.com/dynamodb/" target="_blank">
+<img src="https://img.shields.io/badge/Amazon_DynamoDB-4053D6?style=for-the-badge&logo=amazon-dynamodb&logoColor=white" alt="Amazon DynamoDB"/>
+</a>
+<a href="https://www.serverless.com/" target="_blank">
+<img src="https://img.shields.io/badge/Serverless-FD5750?style=for-the-badge&logo=serverless&logoColor=white" alt="Serverless Framework"/>
+</a>
+</p>
+
+
+```
   
 
 ### 👥 Autores  
