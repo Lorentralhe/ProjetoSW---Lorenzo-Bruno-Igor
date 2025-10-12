@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-em_desenvolvimento-yellow)
 
-> Projeto desenvolvido para a matéria de Sistemas Web I, com o objetivo de criar um sistema completo de gerenciamento para uma pizzaria, incluindo backend e frontend.
+> Projeto desenvolvido para a matéria de Sistemas Web, com o objetivo de criar um sistema completo de gerenciamento para uma pizzaria, incluindo backend e frontend.
 
 ### 📖 Tabela de Conteúdos
 - [Descrição do Projeto](#-descrição-do-projeto)
