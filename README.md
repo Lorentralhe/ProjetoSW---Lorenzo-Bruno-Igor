@@ -66,3 +66,26 @@ $ npm install
 
 # Rode a aplicação Frontend
 $ npm run dev
+
+👥 Autores  
+Este projeto foi desenvolvido por:
+
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/Lorentralhe">
+<sub><b>Lorenzo Tralhe</b></sub>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/brunobui/">
+<sub><b>Bruno</b></sub>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/Igorrangelsouza">
+<sub><b>Igor</b></sub>
+</a>
+</td>
+</tr>
+</table>
