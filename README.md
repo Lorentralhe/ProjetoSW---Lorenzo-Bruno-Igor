@@ -68,7 +68,7 @@ $ npm install
 $ npm run dev
 
 ```
-🛠️ Tecnologias Utilizadas
+### 🛠️ Tecnologias Utilizadas
 As seguintes ferramentas foram usadas na construção do projeto:
 
 Backend (Serverless)
