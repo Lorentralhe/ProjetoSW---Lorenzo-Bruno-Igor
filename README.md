@@ -1,6 +1,6 @@
 # 🍕 Pizzaria App Pro
 
-![Status](https://img.shields.io/badge/status-em_desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/status-Finalizado-green)
 
 > Projeto desenvolvido para a matéria de Sistemas Web, com o objetivo de criar um sistema completo de gerenciamento para uma pizzaria, incluindo backend e frontend.
 
