@@ -21,13 +21,17 @@
 
 ---
 
-### ✨ Funcionalidades
-- [ ] Cadastro de Usuário
-- [ ] Login de Usuário
-- [ ] Listagem de Produtos (Pizzas)
-- [ ] Criação de Pedidos
-- [ ] Gerenciamento de Categorias
-- [ ] (Adicione outras funcionalidades que seu projeto possui)
+### ✨ Funcionalidades e Serviços AWS utilizados
+- [x] Cadastro de Usuário
+- [x] Login de Usuário
+- [x] Listagem de Produtos (Pizzas)
+- [x] Criação de Pedidos
+- [x] Gerenciamento de Categorias
+- [x] API Gateway: Expõe os endpoints HTTP
+- [x] AWS Lambda: Executa funções serverless (addOrder, setAsDelivered, notifyOwner)
+- [x] DynamoDB: Armazena dados dos pedidos e tokens
+- [x] SNS (Simple Notification Service): Envia notificações quando um pedido muda de status
+- [x] SQS (Simple Queue Service): 
 
 ---
 
