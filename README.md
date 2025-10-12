@@ -90,8 +90,6 @@ Backend (Serverless)
 </a>
 </p>
 
-
-```
   
 
 ### 👥 Autores  
