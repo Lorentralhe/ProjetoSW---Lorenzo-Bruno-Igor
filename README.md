@@ -31,7 +31,7 @@
 - [x] AWS Lambda: Executa funções serverless (addOrder, setAsDelivered, notifyOwner)
 - [x] DynamoDB: Armazena dados dos pedidos e tokens
 - [x] SNS (Simple Notification Service): Envia notificações quando um pedido muda de status
-- [x] SQS (Simple Queue Service): 
+- [x] SQS (Simple Queue Service): É utilizado para desacoplar o processamento de pedidos
 
 ---
 
