@@ -22,8 +22,6 @@
 ---
 
 ### ✨ Funcionalidades e Serviços AWS utilizados
-- [x] Cadastro de Usuário
-- [x] Login de Usuário
 - [x] Listagem de Produtos (Pizzas)
 - [x] Criação de Pedidos
 - [x] Gerenciamento de Categorias
