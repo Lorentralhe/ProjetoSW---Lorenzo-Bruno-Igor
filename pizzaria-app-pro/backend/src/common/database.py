@@ -3,23 +3,21 @@ import boto3
 from uuid import uuid4
 from datetime import datetime
 
+# MODIFICADO: A inicialização das tabelas foi removida daqui
 dynamodb = boto3.resource('dynamodb')
-orders_table = dynamodb.Table(os.environ.get('ORDERS_TABLE_NAME'))
-tokens_table = dynamodb.Table(os.environ.get('TOKENS_TABLE_NAME'))
 
-def create_order(order_data):
-    timestamp = datetime.utcnow().isoformat()
-    item = {
-        'orderId': str(uuid4()),
-        'customer': order_data['customer'],
-        'item': order_data['item'],
-        'status': 'PENDING',
-        'createdAt': timestamp,
-    }
-    orders_table.put_item(Item=item)
-    return item
+# --- Funções para a tabela de Pedidos ---
+
+def create_order_from_item(order_item):
+    """Salva um item de pedido completo vindo da fila SQS no DynamoDB."""
+    # MOVIDO PARA DENTRO DA FUNÇÃO: A tabela só é inicializada quando a função é chamada
+    orders_table = dynamodb.Table(os.environ.get('ORDERS_TABLE_NAME'))
+    orders_table.put_item(Item=order_item)
+    return order_item
 
 def update_order_status(order_id, new_status):
+    """Atualiza o status de um pedido."""
+    orders_table = dynamodb.Table(os.environ.get('ORDERS_TABLE_NAME'))
     result = orders_table.update_item(
         Key={'orderId': order_id},
         UpdateExpression="set #status = :s",
@@ -29,7 +27,11 @@ def update_order_status(order_id, new_status):
     )
     return result.get('Attributes')
 
+# --- Funções para a tabela de Tokens ---
+
 def create_token(token_data):
+    """Salva um novo token de notificação."""
+    tokens_table = dynamodb.Table(os.environ.get('TOKENS_TABLE_NAME'))
     item = {
         'tokenId': str(uuid4()),
         'deviceToken': token_data['deviceToken'],
@@ -38,5 +40,7 @@ def create_token(token_data):
     return item
 
 def get_all_tokens():
+    """Busca todos os tokens de notificação."""
+    tokens_table = dynamodb.Table(os.environ.get('TOKENS_TABLE_NAME'))
     response = tokens_table.scan(ProjectionExpression="deviceToken")
     return [item['deviceToken'] for item in response.get('Items', [])]
