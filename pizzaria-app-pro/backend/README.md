@@ -1,1 +1,0 @@
-# ProjetoSW---Lorenzo-Bruno-Igor
